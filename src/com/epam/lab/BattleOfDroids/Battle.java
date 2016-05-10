@@ -60,14 +60,14 @@ public class Battle {
 
 
 
-        if (drMap != null) {
-            if (drMap.occupied.containsKey(xy)) {
-                System.out.println("cannot create at x = " + xy[0] + " y = " + xy[1] + " coordinates. they are occupied");
-            }
-        }
-
-                drMap.occupied.put(dr1, xy);
-        dr1.droidsMap = drMap;
+//        if (drMap != null) {
+//            if (drMap.occupied.containsKey(xy)) {
+//                System.out.println("cannot create at x = " + xy[0] + " y = " + xy[1] + " coordinates. they are occupied");
+//            }
+//        }
+//
+//                drMap.occupied.put(dr1, xy);
+//        dr1.droidsMap = drMap;
         // enter arrow keys to move
         dr1.walk(RIGHT);
         //enter 's' to shoot
