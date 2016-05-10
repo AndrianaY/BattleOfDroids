@@ -1,12 +1,39 @@
 package com.epam.lab.BattleOfDroids;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 /**
  * Created by Andriana_Yarmoliuk on 5/4/2016.
  */
-public abstract class Droid {
+public abstract class Droid implements Serializable{
+    private Ship ship;
+
+
+    double[] coordinates = new double[2];
+    protected double velocity;
+    int repairs;
     Integer power;
+    Integer health;
     String name;
-    public abstract void walk();
+    int direction;
+    DroidsMap droidsMap;
+
+
+    Droid(String name, double[] xy, DroidsMap drMap){
+        this.name = name;
+        coordinates = xy;
+        droidsMap = drMap;
+        System.out.println("droid created at " + coordinates[0] + " " + coordinates[1] + " point");
+
+
+    }
+
+
+
+    public abstract void walk(int direction);
     public Integer getPower(){
         return power;
     }
@@ -14,7 +41,8 @@ public abstract class Droid {
         this.power = power;
     }
 
-    Droid(String name){
-        this.name = name;
+    public void setHealth(Integer health){
+        this.health = health;
     }
+    public Integer getHealth(){ return health; }
 }

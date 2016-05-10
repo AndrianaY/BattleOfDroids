@@ -5,5 +5,6 @@ package com.epam.lab.BattleOfDroids;
  */
 public interface RepairDroid {
     void repair();
+    void rest();
 
 }
