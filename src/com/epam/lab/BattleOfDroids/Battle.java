@@ -10,42 +10,19 @@ import static javax.swing.SwingConstants.*;
 public class Battle {
     public static void main(String[] args) {
 
+        MainMenu menu = MainMenu.getInstance();
 
+        DroidsMap map = Syncronization.readMap();
 
-        ObjectInputStream in= null;
-        DroidsMap droidsMap = null;
+        if(map ==null){
 
-        try {
-            in = new ObjectInputStream(
-            new FileInputStream("droidMap.dat"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("there is no file(s)");
-        }
-        if(!(in == null)) {
-            try {
-                droidsMap = (DroidsMap) in.readObject();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (ClassNotFoundException e1) {
-                e1.printStackTrace();
-                System.out.println("something wrong with reading map");
-            }
+            map = DroidsMap.getInstance();
         }
 
-
-        try {
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        menu.mainMenu(map);
 
 
-        if(droidsMap == null) {
-            droidsMap = DroidsMap.getInstance();
-        }
-
-        System.out.println("1 - create new droid \n 2 - load saved droid \n 3 - delete droid \n 4 - exit");
+        Syncronization.saveMap(map);
 
 
 
@@ -53,31 +30,6 @@ public class Battle {
 
 
 
-
-
-
-
-        ObjectOutputStream out = null;
-        try {
-
-            out = new ObjectOutputStream(
-                    new FileOutputStream("droidMap.dat"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-
-            out.writeObject(droidsMap);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
 
