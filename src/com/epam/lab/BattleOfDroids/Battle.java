@@ -12,14 +12,8 @@ public class Battle {
 
         MainMenu menu = MainMenu.getInstance();
 
-        DroidsMap map = null;
+        DroidsMap map = Syncronization.loadMap();
 
-        Syncronization.readMap();
-
-        if(map ==null){
-
-            map = DroidsMap.getInstance();
-        }
 
         menu.mainMenu(map);
 

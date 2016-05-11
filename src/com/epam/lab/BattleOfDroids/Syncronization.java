@@ -17,16 +17,16 @@ public class Syncronization {
         return instance;
     }
 
-    public static DroidsMap readMap(){
+    public static DroidsMap loadMap(){
         ObjectInputStream in= null;
         DroidsMap droidsMap = null;
 
         try {
             in = new ObjectInputStream(
-                    new FileInputStream("D:\\javalab\\BattleOfDroids\\droidMap.dat"));
-        } catch (IOException e) {
+                    new FileInputStream("droidMap.dat"));
+        } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("there is no file(s)");
+            System.out.println("there is no map(s)");
         }
         if(!(in == null)) {
             try {
@@ -40,10 +40,13 @@ public class Syncronization {
         }
 
 
-        try {
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!(in==null)){
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("cannot close the stream");
+            }
         }
 
 
@@ -52,6 +55,8 @@ public class Syncronization {
         }
         return droidsMap;
     }
+
+
 
     public static void saveMap(DroidsMap map){
 
@@ -63,6 +68,7 @@ public class Syncronization {
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("file was not created");
         }
         try {
 
@@ -70,11 +76,16 @@ public class Syncronization {
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("map was not saved");
         }
-        try {
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!(out==null)){
+            try {
+                out.close();
+                System.out.println("closing the stream");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("cannot close stream");
+            }
         }
 
     }

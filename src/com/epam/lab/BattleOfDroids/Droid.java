@@ -25,7 +25,8 @@ public abstract class Droid implements Serializable{
     Droid(String name, double[] xy, DroidsMap drMap){
         this.name = name;
         coordinates = xy;
-        droidsMap = drMap;
+        drMap.occupied.put(this, xy);
+
         System.out.println("droid created at " + coordinates[0] + " " + coordinates[1] + " point");
 
 
