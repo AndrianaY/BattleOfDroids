@@ -9,94 +9,72 @@ import static javax.swing.SwingConstants.*;
  */
 public class Battle {
     public static void main(String[] args) {
-        // enter parameters (repair, droideka, super), name, coordinates
-        double[] xy = {0.0, 0.0};
-        DroidsMap drMap1;
-
-        SuperDroid dr1;
-
-//
 
 
-        ObjectInputStream in1= null;
-        ObjectInputStream in2= null;
+
+        ObjectInputStream in= null;
+        DroidsMap droidsMap = null;
+
         try {
-            in1 = new ObjectInputStream(
-                    new FileInputStream("droids.dat"));
-            in2 = new ObjectInputStream(
-                    new FileInputStream("droidMap.dat"));
+            in = new ObjectInputStream(
+            new FileInputStream("droidMap.dat"));
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("there is no file(s)");
         }
-        try {
-            SuperDroid droidFromFile1 = (SuperDroid)in1.readObject();
-            dr1 = droidFromFile1;
-            DroidsMap droidFromFile2 = (DroidsMap)in2.readObject();
-            drMap1 = droidFromFile2;
-            System.out.println("name " + droidFromFile1.name + " coordinates " +  droidFromFile1.coordinates[0] + " " + droidFromFile1.coordinates[1]
-                    + droidFromFile1.power + " " + droidFromFile1.velocity);
-//            if (drMap1 != null) {
-//                if (drMap1.occupied.containsValue(xy)) {
-//                    System.out.println("cannot create at x = " + xy[0] + " y = " + xy[1] + " coordinates. they are occupied");
-//                }
-//            }
-            System.out.println("occupied " + droidFromFile2.occupied);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if(!(in == null)) {
+            try {
+                droidsMap = (DroidsMap) in.readObject();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
+                System.out.println("something wrong with reading map");
+            }
         }
+
+
         try {
-            in1.close();
-            in2.close();
+            in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
+        if(droidsMap == null) {
+            droidsMap = DroidsMap.getInstance();
+        }
+
+        System.out.println("1 - create new droid \n 2 - load saved droid \n 3 - delete droid \n 4 - exit");
 
 
 
 
 
 
-//        if (drMap != null) {
-//            if (drMap.occupied.containsKey(xy)) {
-//                System.out.println("cannot create at x = " + xy[0] + " y = " + xy[1] + " coordinates. they are occupied");
-//            }
-//        }
-//
-//                drMap.occupied.put(dr1, xy);
-//        dr1.droidsMap = drMap;
-        // enter arrow keys to move
-        dr1.walk(RIGHT);
-        //enter 's' to shoot
-        dr1.shoot();
 
 
 
 
-        ObjectOutputStream out1 = null;
-        ObjectOutputStream out2 = null;
+
+        ObjectOutputStream out = null;
         try {
-            out1 = new ObjectOutputStream(
-                    new FileOutputStream("droids.dat"));
-            out2 = new ObjectOutputStream(
+
+            out = new ObjectOutputStream(
                     new FileOutputStream("droidMap.dat"));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            out1.writeObject(dr1);
-            out2.writeObject(drMap);
+
+            out.writeObject(droidsMap);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            out1.close();
-            out2.close();
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
