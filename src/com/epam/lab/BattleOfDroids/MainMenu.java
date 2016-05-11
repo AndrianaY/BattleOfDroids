@@ -1,8 +1,10 @@
 package com.epam.lab.BattleOfDroids;
 
+import javax.management.relation.Role;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.Map;
 
 import static java.lang.System.*;
@@ -25,25 +27,28 @@ public class MainMenu {
 
 
     public void mainMenu(DroidsMap map){
-        String param = "";
+        String choise = "";
+
         out.println("1 - create new droid\n2 - show list of droids (in saved map)\n3 - delete droid\n4 - exit");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            param = reader.readLine();
+            choise = reader.readLine();
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("cannot read the input");
         }
-
-        //todo: parse input, handle exceptions
-        switch (param){
-            case "1": {CreateNewDroidMenu.getInstance(); CreateNewDroidMenu.newDroid(map);}
-            case "2": {LoadDroidsMapMenu.getInstance(); LoadDroidsMapMenu.showMapList(map);}
-            case "3": {DeleteDroids.getInstance(); DeleteDroids.deleteDroid("super1", map);}
-            default: {
-                System.out.println("enter correct parameter");
-            }
+        if (choise.equals("1") || choise.equalsIgnoreCase("create")){
+            {CreateNewDroidMenu.getInstance(); CreateNewDroidMenu.newDroid(map);}
         }
+        else if(choise.equals("2") || choise.equalsIgnoreCase("show")){
+            {LoadDroidsMapMenu.getInstance(); LoadDroidsMapMenu.showMapList(map);}
+        }
+        else if(choise.equals("3") || choise.equalsIgnoreCase("delete")){
+            {DeleteDroidsMenu.getInstance(); DeleteDroidsMenu.deleteDroid("super1", map);}
+        }
+        else
+            System.out.println("enter correct parameter");
+
 
     }
 
@@ -89,29 +94,21 @@ public class MainMenu {
         }
     }
 
-    public static class DeleteDroids {
-        private static DeleteDroids instance;
+    public static class DeleteDroidsMenu {
+        private static DeleteDroidsMenu instance;
 
-        private DeleteDroids() {
+        private DeleteDroidsMenu() {
 
         }
 
-        public static synchronized DeleteDroids getInstance() {
+        public static synchronized DeleteDroidsMenu getInstance() {
             if (instance == null) {
-                instance = new DeleteDroids();
+                instance = new DeleteDroidsMenu();
             }
             return instance;
         }
 
         public static DroidsMap deleteDroid(String name, DroidsMap map){
-
-
-
-                for(Map.Entry <Droid, double[]> entry : map.occupied.entrySet()) {
-                    if(entry.getKey().name.equals(name)){
-                        map.occupied.remove(entry.getKey());
-                    }
-                }
 
 
             return map;
